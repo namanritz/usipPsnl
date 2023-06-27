@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap.css">
+    <script src="/bootstrap.js"></script>
+
+</head>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        /* background-image: url(dtubg.jpeg);
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%; */
+        overflow: scroll;
+        /* background-color: aliceblue; */
+        background-color: white;
+
+    }
+
+    .img-dtu img {
+        top: 53px;
+        position: absolute;
+        scale: 1;
+    }
+
+    @media (min-width: 950px) {
+        .img-dtu img {
+            /* top: 220px;
+            position: absolute;
+            scale: 3.3  !important; */
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+
+    
+    .container h1 {
+        text-align: center;
+        margin-bottom: 25px !important;
+
+    }
+
+    .container input {
+        border-radius: 4px;
+
+    }
+</style>
+
+
+
+<body>
+
+  <%- include('./partials/flash')%>
+  <%- include('./partials/navbar')%>
+
+<form action="/admin/students" method="post">
+    <label for="roll_no" class="form-label">Roll Number</label>
+    <input type="text" name="roll_no" class="form-control">
+    <button type="submit" class="btn btn-primary" style="margin:auto;  margin-bottom: 10px;">Search</button>
+</form>
+<div class="container">
+<%if(student){%>
+    <div id="student-info" class="container d-flex justify-content-around">
+        <div>
+        <p><b>_id:</b> <%=student._id%></p>
+        <p><b>roll_no:</b> <%=student.roll_no%></p>
+        <p><b>fullname:</b> <%=student.fullname%></p>
+        <p><b>stu_id:</b> <%=student.stu_id%></p>
+        <p><b>reg_dtu:</b> <%=student.reg_dtu%></p>
+        <p><b>reg_year:</b> <%=student.reg_year%></p>
+        <p><b>reg_group:</b> <%=student.reg_group%></p>
+        <p><b>reg_id:</b> <%=student.reg_id%></p>
+        <p><b>f_name:</b> <%=student.f_name%></p>
+        <p><b>fathername:</b> <%=student.fathername%></p>
+        <p><b>rank:</b> <%=student.rank%></p>
+        <p><b>scheme_year:</b> <%=student.scheme_year%></p>
+        <p><b>sp_code:</b> <%=student.sp_code%></p>
+        <p><b>aprog:</b> <%=student.aprog%></p>
+        <p><b>photo:</b> <%=student.photo%></p>
+        <p><b>phone:</b> <%=student.phone%></p>
+        </div><div>
+        <p><b>email:</b> <%=student.email%></p>
+        <p><b>address:</b> <%=student.address%></p>
+        <p><b>city:</b> <%=student.city%></p>
+        <p><b>pincode:</b> <%=student.pincode%></p>
+        <p><b>hindiname:</b> <%=student.hindiname%></p>
+        <p><b>sex:</b> <%=student.sex%></p>
+        <p><b>category:</b> <%=student.category%></p>
+        <p><b>dob:</b> <%=student.dob%></p>
+        <p><b>mothername:</b> <%=student.mothername%></p>
+        <p><b>comment:</b> <%=student.comment%></p>
+        <p><b>secid:</b> <%=student.secid%></p>
+        <p><b>bg:</b> <%=student.bg%></p>
+        <p><b>libno:</b> <%=student.libno%></p>
+        <p><b>campus:</b> <%=student.campus%></p>
+        <p><b>nationality:</b><%=student.nationality%></p>
+        <p><b>f_phone:</b><%=student.f_phone%></p>
+        <p><b>m_phone:</b><%=student.m_phone%></p>
+        <p><b>dtu_email:</b><%=student.dtu_email%></p>
+    </div></div>
+    <hr>
+
+
+<%}%>
+<%if(studentState){%>
+    <h2>Student State:</h2>
+<div id="student-info" class="container d-flex justify-content-around">
+   
+    
+    <div>
+<p><b>roll_no:</b> <%=studentState.roll_no%></p>
+<p><b>Current Semester:</b> <%=studentState.currentSem%></p>
+<p><b>CurrentCredits:</b> <%=studentState.currentCredits%></p>
+</div>
+<div>
+    <p><b>Student ID:</b> <%=studentState.stu_id%></p>
+    <p><b>Current Electives:</b> <%=studentState.currentElectives%></p>
+    <p><b>Secured Credits:</b> <%=studentState.securedCredits%></p>
+</div>
+</div>
+
+<hr>
+<div class="container">
+<h2>Course registeration info:</h2>
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr >
+            <th scope="col">Subject ID</th>
+            <th scope="col">Subject Code</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Credits</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%for(let s of studentState.currentSubjects){%>
+        <tr>
+            <td><%=s.sub_id%></td>
+            <td><%=s.sub_code%></td>
+            <td><%=s.sub_name%></td>
+            <td><%=s.sub_credit%></td>
+        </tr>
+    <%}%>
+    </tbody>
+</table>
+
+</div>
+<br>
+
+
+<%}%></div>
+
+
+
+</body>
+
+</html>

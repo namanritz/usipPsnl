@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap.css">
+    <script src="/bootstrap.js"></script>
+   
+</head>
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+    }
+
+    #row {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin: 10px;
+        width: 70%;
+
+    }
+
+    label {
+        margin-bottom: 10px;
+    }
+
+    select,
+    input[type=number] {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        width: 100px;
+    }
+
+    input[type=submit] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        /* background-image: url(dtubg.jpeg);
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%; */
+        overflow: scroll;
+        /* background-color: aliceblue; */
+        background-color: aliceblue;
+
+    }
+
+    .img-dtu img {
+        top: 53px;
+        position: absolute;
+        scale: 1;
+    }
+
+    @media (min-width: 950px) {
+        .img-dtu img {
+            /* top: 220px;
+            position: absolute;
+            scale: 3.3  !important; */
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+
+    .container {
+        opacity: 0.9;
+        position: relative;
+        z-index: 8;
+        margin: auto;
+        width: 370px;
+        padding: 30px;
+        margin-top: 100px !important;
+        background-color: antiquewhite !important;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+    }
+
+    .container h1 {
+        text-align: center;
+        margin-bottom: 25px !important;
+
+    }
+
+    .container input {
+        border-radius: 4px;
+
+    }
+</style>
+
+
+
+<body>
+    <%- include('./partials/flash')%>
+        <%- include('./partials/navbar')%>
+
+            <h1>Assign Home Sections</h1>
+            <div>
+                <form action="/admin/homeSection" method="post">
+                    <div id="row">
+                        <span> <label for="dropdown1">Year</label>
+                            <select id="dropdown1" name="year">
+                                <option value="2020" <%if(year=='2020'){%>selected<%}%>>2020</option>
+                                <option value="2021" <%if(year=='2021'){%>selected<%}%>>2021</option>
+                                <option value="2022" <%if(year=='2022'){%>selected<%}%>>2022</option>
+                                <option value="2023" <%if(year=='2023'){%>selected<%}%>>2023</option>
+                                <option value="2024" <%if(year=='2024'){%>selected<%}%>>2024</option>
+                            </select>
+                        </span>
+                        <span>
+                            <label for="dropdown2">Programme</label>
+                            <select id="dropdown2" name="aprog">
+                                <%for(let a of aprogs){%>
+                                    <option value="<%=a.aprog%>"   <%if(a.aprog==aprog){%>selected<%}%>>
+                                        <%=a.aprog%>
+                                    </option>
+                                    <%}%>
+                            </select>
+                        </span>
+                        <span>
+                            <label for="dropdown3">Discipline</label>
+                            <select id="dropdown3" name="sp_code">
+                                <%for(let sp of specialization){%>
+                                    <option value="<%=sp.sp_code%>" data-category="<%=sp.aprog%>" <%if(sp.sp_code==sp_code){%>selected<%}%>>
+                                        <%=sp.sp_code%>
+                                    </option>
+                                    <%}%>
+                            </select>
+                        </span><span>
+                            <label for="dropdown4" >Dropdown 4:</label>
+                            <select id="dropdown4">
+                                <option value="option1">Option 1</option>
+                                <option value="option2">Option 2</option>
+                                <option value="option3">Option 3</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div id="row">
+                        <span>
+                            <label for="students/group">Student Count:</label>
+                            <%if(students){%><span><%=students.length%></span><%}%>
+                        </span>
+                        <label for="students/section">Students/Section:</label>
+                        <input type="number" id="students/section" name="students_section" min="00" max="999" value="<%=students_section%>">
+                        </span><span>
+                            <label for="students/group">Students/Group:</label>
+                            <input type="number" id="students/group" name="students_group" min="00" max="999" value="<%=students_group%>">
+                        </span>
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+
+            </div>
+
+
+
+
+
+
+<%if(students){%>
+    <div>
+        <% const numSections = Math.ceil(students.length / students_section); %>
+        <% for (let i = 0; i < numSections; i++) { %>
+          <h2>Section <%= i + 1 %></h2>
+          <% const numGroups = Math.ceil(students_section / students_group); %>
+          <% for (let j = 0; j < numGroups; j++) { %>
+            <h3>Group <%= j + 1 %></h3>
+            <ul>
+                <% for (let k = (i * students_section) + (j * students_group); k < Math.min((i + 1) * students_section, (i * students_section) + ((j + 1) * students_group)); k++) { %>
+                    <% if (students[k]) { %>
+                        <li><%= students[k].fullname %></li>
+                      <% } %>
+              <% } %>
+            </ul>
+          <% } %>
+        <% } %>
+      </div>
+      
+      
+    <%}%>
+
+
+
+
+
+
+
+
+
+
+
+
+            <script>
+                const dropdown2 = document.getElementById("dropdown2");
+                const dropdown3 = document.getElementById("dropdown3");
+        
+                dropdown2.addEventListener("change", filterOptions);
+        
+                function filterOptions() {
+                    const selectedCategory = dropdown2.value;
+        
+                    for (let i = 0; i < dropdown3.options.length; i++) {
+                        const option = dropdown3.options[i];
+                        if (option.getAttribute("data-category") !== selectedCategory) {
+                            option.style.display = "none";
+                        } else {
+                            option.style.display = "block";
+                        }
+                    }
+        
+                    // Reset dropdown3 to first option
+                    dropdown3.selectedIndex = 0;
+                }
+        
+            </script>
+</body>
+
+</html>

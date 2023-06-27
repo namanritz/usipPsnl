@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <link rel="stylesheet" href="/bootstrap.css">
+    <script src="/bootstrap.js"></script>
+    <style>
+        .container1 {
+            padding: 20px;
+            display: flex;
+            max-height: 80vh !important;
+            overflow: scroll;
+
+        }
+
+        .left-side {
+            width: 20%;
+            border: 1px solid gray;
+            padding: 10px;
+            overflow: scroll;
+           
+        }
+
+        .right-side {
+            width: 80%;
+            border: 1px solid gray;
+            padding: 10px;
+        }
+
+        .name {
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .name:hover {
+            background-color: lightgray;
+        }
+
+        .description {
+            margin-top: 10px;
+        }
+
+        .right-side {
+            /* existing styles */
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .description {
+            /* existing styles */
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <%- include('./partials/flash')%>
+        <%- include('./partials/navbar')%>
+
+
+            <div class="container1">
+                <div class="left-side">
+                    <% for (let i=0; i < objects.length; i++) { %>
+                        <div class="name" onClick='showDescription(<%=i%>)'>
+                            <%= objects[i].sp_code %>
+                        </div>
+                        <% } %>
+                </div>
+
+                <div class="right-side">
+                    <% for (let i=0; i < objects.length; i++) { %>
+                        <div class="description" id="description<%= i %>" style="display: none;">
+
+                            <form action="/admin/updateSpecialization/<%=objects[i]._id%>" method="post">
+                                <div class="form-group">
+                                    <label for="name<%= i %>">Specialization Code</label>
+                                    <input type="text" class="form-control" id="sp_code<%= i %>" name="sp_code"
+                                        value="<%= objects[i].sp_code %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="aprog<%= i %>">Academic Program</label>
+                                    <input type="text" class="form-control" id="aprog<%= i %>" name="aprog"
+                                        value="<%= objects[i].aprog %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sp_name<%= i %>">Specialization Name</label>
+                                    <input type="text" class="form-control" id="sp_name<%= i %>" name="sp_name"
+                                        value="<%= objects[i].sp_name %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sp_start_year<%= i %>">Start Year</label>
+                                    <input type="text" class="form-control" id="sp_start_year<%= i %>"
+                                        name="sp_start_year" value="<%= objects[i].sp_start_year %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dept_code<%= i %>">Department Code</label>
+                                    <input type="text" class="form-control" id="dept_code<%= i %>" name="dept_code"
+                                        value="<%= objects[i].dept_code %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hindi<%= i %>">Hindi Name</label>
+                                    <input type="text" class="form-control" id="hindi<%= i %>" name="hindi"
+                                        value="<%= objects[i].hindi %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="campus<%= i %>">Campus</label>
+                                    <input type="text" class="form-control" id="campus<%= i %>" name="campus"
+                                        value="<%= objects[i].campus%>" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+
+                        </div>
+                        <% } %>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="button" onclick="showNewObjectForm()">New Specialization</button>
+            </div>
+
+            <div id="new-object-form" style="display: none;">
+                <form action="/admin/defineSpecializations/<%=admin._id%>" method="post">
+                    <div class="form-group">
+                        <label for="name">Specialization Code</label>
+                        <input type="text" class="form-control" id="sp_code" name="sp_code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aprog>Academic Program</label>
+                        <input type="text" class="form-control" id="aprog" name="aprog" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sp_name">Specialization Name</label>
+                        <input type="text" class="form-control" id="sp_name" name="sp_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sp_start_year">Start Year</label>
+                        <input type="text" class="form-control" id="sp_start_year name="sp_start_year"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dept_code">Department Code</label>
+                        <input type="text" class="form-control" id="dept_code" name="dept_code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hindi">Hindi Name</label>
+                        <input type="text" class="form-control" id="hindi" name="hindi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="campus">Campus</label>
+                        <input type="text" class="form-control" id="campus" name="campus" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+
+</body>
+
+</html>
+
+
+
+<script>
+    function showNewObjectForm() {
+        document.getElementById("new-object-form").style.display = "block";
+    }
+
+    function showDescription(index) {
+        // hide all descriptions
+        for (let i = 0; i < <%= objects.length %>; i++) {
+            document.getElementById("description" + i).style.display = "none";
+        }
+
+        // show selected description
+        document.getElementById("description" + index).style.display = "block";
+    }
+</script>

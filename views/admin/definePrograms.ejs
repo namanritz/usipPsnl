@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <link rel="stylesheet" href="/bootstrap.css">
+    <script src="/bootstrap.js"></script>
+    <style>
+        .container {
+            padding: 20px;
+            display: flex;
+        }
+
+        .left-side {
+            width: 20%;
+            border: 1px solid gray;
+            padding: 10px;
+            overflow: scroll;
+        }
+
+        .right-side {
+            width: 80%;
+            border: 1px solid gray;
+            padding: 10px;
+        }
+
+        .name {
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .name:hover {
+            background-color: lightgray;
+        }
+
+        .description {
+            margin-top: 10px;
+        }
+
+        .right-side {
+            /* existing styles */
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .description {
+            /* existing styles */
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <%- include('./partials/flash')%>
+        <%- include('./partials/navbar')%>
+
+
+            <div class="container">
+                <div class="left-side">
+                    <% for (let i=0; i < objects.length; i++) { %>
+                        <div class="name" onClick='showDescription(<%=i%>)'>
+                            <%= objects[i].aprog %>
+                        </div>
+                        <% } %>
+                </div>
+
+                <div class="right-side">
+                    <% for (let i=0; i < objects.length; i++) { %>
+                        <div class="description" id="description<%= i %>" style="display: none;">
+
+                            <form action="/admin/updateProgram/<%=objects[i]._id%>" method="post">
+                                <div class="form-group">
+                                    <label for="name<%= i %>">Name</label>
+                                    <input type="text" class="form-control" id="name<%= i %>" name="name"
+                                        value="<%= objects[i].name %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="startYear<%= i %>">Start Year</label>
+                                    <input type="text" class="form-control" id="startYear<%= i %>" name="start_year"
+                                        value="<%= objects[i].start_year %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="print<%= i %>">Print</label>
+                                    <input type="text" class="form-control" id="print<%= i %>" name="aprog_prnt"
+                                        value="<%= objects[i].aprog_prnt %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hindiName<%= i %>">Hindi Name</label>
+                                    <input type="text" class="form-control" id="hindiName<%= i %>" name="aproghindi"
+                                        value="<%= objects[i].aproghindi %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="durationMin<%= i %>">Duration (Min)</label>
+                                    <input type="text" class="form-control" id="durationMin<%= i %>" name="duration_min"
+                                        value="<%= objects[i].duration_min %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="durationMax<%= i %>">Duration (Max)</label>
+                                    <input type="text" class="form-control" id="durationMax<%= i %>" name="duration_max"
+                                        value="<%= objects[i].duration_max %>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numStages<%= i %>">Num Stages</label>
+                                    <input type="text" class="form-control" id="numStages<%= i %>" name="num_stages"
+                                        value="<%= objects[i].num_stages%>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mc<%= i %>">Min Credits</label>
+                                    <input type="text" class="form-control" id="mc<%= i %>" name="min_credits"
+                                        value="<%= objects[i].min_credits %>" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+
+                        </div>
+                        <% } %>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="button" onclick="showNewObjectForm()">New Program</button>
+            </div>
+            
+            <div id="new-object-form" style="display: none;">
+                <form action="/admin/definePrograms/<%=admin._id%>" method="post">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="startYear">Start Year</label>
+                        <input type="text" class="form-control" id="startYear" name="start_year" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aprog">Program</label>
+                        <input type="text" class="form-control" id="aprog" name="aprog" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aprog_prnt">Parent program</label>
+                        <input type="text" class="form-control" id="aprog_prnt" name="aprog_prnt" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aproghindi">Program in Hindi</label>
+                        <input type="text" class="form-control" id="aproghindi" name="aproghindi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="degreehindiname">Degree in Hindi</label>
+                        <input type="text" class="form-control" id="degreehindiname" name="degreehindiname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="degreename">Degree</label>
+                        <input type="text" class="form-control" id="degreename" name="degreename" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration_max">Max Duration</label>
+                        <input type="text" class="form-control" id="duration_max" name="duration_max" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration_min">Min Duration</label>
+                        <input type="text" class="form-control" id="duration_min" name="duration_min" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="num_stages">Num stages</label>
+                        <input type="text" class="form-control" id="num_stages" name="num_stages" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="min_credits">Min Credits</label>
+                        <input type="text" class="form-control" id="min_credits" name="min_credits" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-success">
+                    </div>
+                </form>
+            </div>
+            
+    
+</body>
+
+</html>
+
+
+
+<script>
+    function showNewObjectForm() {
+    document.getElementById("new-object-form").style.display = "block";
+}
+
+    function showDescription(index) {
+        // hide all descriptions
+        for (let i = 0; i < <%= objects.length %>; i++) {
+            document.getElementById("description" + i).style.display = "none";
+        }
+
+        // show selected description
+        document.getElementById("description" + index).style.display = "block";
+    }
+</script>

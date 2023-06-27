@@ -1,0 +1,297 @@
+<% function integer_to_roman(num) { if (typeof num !=='number' ) return false; if(num==0) return "Course Work" ; var
+  digits=String(+num).split(""), key=["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM", ""
+  ,"X","XX","XXX","XL","L","LX","LXX","LXXX","XC", "" ,"I","II","III","IV","V","VI","VII","VIII","IX"], roman_num="" ,
+  i=3; while (i--) roman_num=(key[+digits.pop() + (i * 10)] || "" ) + roman_num; return Array(+digits.join("") +
+  1).join("M") + roman_num; } %>
+  <!DOCTYPE html>
+  <html>
+
+
+
+  <head>
+
+   
+
+    <title>Admit Card</title>
+    <style>
+      
+      .symbol {
+        margin-right: 10px;
+      }
+
+      h1 {
+        padding-left: 100px;
+      }
+
+      #page {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+      }
+
+      /* Add some general styling */
+      body {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+      }
+
+      /* Center the header and give it some styling */
+      h1,
+      h2 {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      /* Add some spacing between the student details and the table */
+      div+br {
+        margin-top: 30px;
+      }
+
+      /* Style the table */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      /* Add some spacing between the table and the signature */
+
+
+      /* Center the signature and give it some styling */
+      div.signature {
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+
+      .abc {
+        display: flex;
+      }
+
+      .left {
+        width: 50%;
+        padding-right: 20px;
+      }
+
+      .right {
+        width: 50%;
+        padding-left: 20px;
+      }
+
+      td {
+        font-size: x-small;
+        font-weight: normal;
+      }
+      
+    </style>
+
+  </head>
+
+  <body>
+
+   
+
+    <div id="comp">
+      <pre>
+
+
+      </pre>
+      <div id="page" style="max-width: 700px; margin:0px auto; page-break-after: always">
+        <div>
+          <div style="max-height: 90px;">
+            <div style="text-align:center;">
+              <p style="text-align:center;font-size: larger; margin:5px 0;"> <b> Delhi Technological
+                  University
+              </p></b>
+              <p style="text-align:center;margin:5px 0; font-size: small;">Formerly Delhi College of
+                Engineering
+              </p>
+              <p style="text-align:center;font-size: smaller;margin:5px 0;">Examination Department</p>
+              <p style="text-align:center;font-size: smaller;margin:5px 0;">
+                Admit Card for Mid Term Examination - July 2023
+              </p>
+            </div>
+            <div style="width: 75px;  position: relative; bottom:75px; right:0%;" class="logo">
+              <img src="/img.png" alt="" style="max-width: 100%; ">
+            </div>
+          </div>
+          <b>
+            <hr>
+          </b>
+
+          <div class="abc" style="font-size: small; ">
+            <div class="left">
+              <p><strong>Student ID:</strong>
+                <%=student.roll_no.toUpperCase()%>
+              </p>
+              <p><strong>Student Name:</strong>
+                <%=student.fullname%>
+                
+              </p>
+              <p><strong>Mobile Number:</strong>
+                <%=student.phone%>
+              </p>
+
+              <p><strong>Father's Name:</strong>
+                <%=student.fathername%>
+              </p>
+              <p><strong>Mother's Name:</strong>
+                <%=student.mothername%>
+              </p>
+              <p><strong>Course:</strong>
+                <%=aprog.name%>
+              </p>
+              <p><strong>Branch:</strong>
+                <%if(sp){%>  <%=sp.sp_name%><%}else{%><%=student.sp_code%><%}%>
+              </p>
+              <p><strong>Address:</strong>
+                <%=student.address%>
+                  
+              </p>
+              <p><strong>Semester:</strong>
+                <!-- <%=integer_to_roman(student.currentSem)%>  -->Summer Semester
+              </p>
+            </div>
+            <div class="right">
+              <img src="/reg_photos/<%=student.stu_id%>.jpg" style="height: 50%" alt="" srcset="">
+            </div>
+          </div>
+
+          <table style="font-size: small;">
+            <tr>
+              <th>S.No</th>
+              <th>Subject Code</th>
+              <th>Subject Name</th>
+              <th>Type</th>
+              <th>Credits</th>
+            </tr>
+            <%let i=0; for(let sub of student.currentSubjects){%>
+
+              <%if(sub.course_type=='compulsory'||sub.course_type=='COMPULSORY'){i++;%>
+                <tr>
+                  <td>
+                    <%=i%>
+                  </td>
+                  <td>
+                    <%=sub.sub_code%>
+                  </td>
+                  <td>
+                    <%=sub.sub_name%>
+                  </td>
+                  <td>
+                    <%=sub.course_type%>
+                  </td>
+                  <td>
+                    <%=sub.sub_credit%>
+                  </td>
+                </tr>
+                <%}%>
+                  <%}%>
+                    <%for(let sub of student.currentSubjects){%>
+
+                      <%if(sub.course_type=='elective'||sub.course_type=='ELECTIVE'){i++%>
+                        <tr>
+                          <td>
+                            <%=i%>
+                          </td>
+                          <td>
+                            <%=sub.sub_code%>
+                          </td>
+                          <td>
+                            <%=sub.sub_name%>
+                          </td>
+                          <td>
+                            <%=sub.course_type%>
+                          </td>
+                          <td>
+                            <%=sub.sub_credit%>
+                          </td>
+                        </tr>
+                        <%}%>
+                          <%}%>
+
+          </table>
+          <pre>
+
+
+
+
+     </pre>
+
+          <div class="abc" style="font-size: small; ">
+            <div class="left">
+              <pre>
+
+            </pre>
+              <b> Student signature</b>
+            </div>
+            <div class="right">
+              <b> Signature of the CoE</b>
+              <img style="height: 80px;" src="/exam_controller.jpg" style="height: 200px;" alt="" srcset="">
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="html2pdf__page-break"></div>
+
+      <br>
+      <div id="page2" style="max-width: 700px; margin:0px auto;  padding: 10px;">
+        <h2>INSTRUCTIONS FOR CANDIDATES:</h2>
+        <ul style="list-style-type: none;">
+          <li><b>1.</b> Entry to the Examination hall will not be permitted without the admit card.</li>
+          <br>
+          <li><b>2.</b> The candidates should bring University ID card for the examination.</li>
+          <br>
+          <li><b>3. </b>Candidates are advised to check Seating Plan every day. <b>Candidates should ensure to be on the
+              seat allocated as per the seating plan 15 minutes prior to the start of the examination and to sign on the
+              Attendance sheet against his/her Roll no.</b></li>
+          <br>
+          <li><b>4.</b> Scientific calculator is allowed. However, there should not be any written/typed material on it.
+          </li>
+          <br>
+          <li> <b> 5. Candidates are strictly advised not to bring programmable calculators, mobile device, or
+              electronic gadgets inside the examination centre premises. Any candidate found using or in possession of
+              unauthorized material or indulging in copying or adopting unfair means will be booked as UFM case.</li>
+          <br>
+          <li>6. </b> Candidates should follow the instruction of the invigilator and should not leave the examination
+            hall without the permission of the invigilator.</li>
+          <br>
+          <li><b>7.</b> Candidates are not allowed to leave the examination hall for the use of washroom, etc. after the
+            start of the examination.</li>
+          <br>
+          <li><b>8.</b> Candidates should follow strict COVID-19 safety protocols and guidelines (Wear Mask properly,
+            Sanitize regularly, Maintain Physical Distance, etc.)</li>
+        </ul>
+      </div>
+    </div>
+
+   
+    
+    <button id="download-btn">Print</button>
+    <h5>During print preview , click on more settings and uncheck the Headers and Footers option for complete print.</h5>      
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/printThis.js"></script>
+    <script src="/custom.js"></script>
+    
+  </body>
+ 
+
+
+  </html>

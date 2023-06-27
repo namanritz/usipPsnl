@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/bootstrap.css">
+  <script src="/bootstrap.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <%- include('./partials/flash')%>
+
+    <div>
+      <h1 class="text-center">Form</h1>
+      <div>
+        <form action="/student/register" method="post">
+          <div class="mb-3">
+            <label for="roll_no" class="form-label">Roll Number</label>
+            <input type="text" class="form-control" id="roll_no" name="student[roll_no]" value="" required>
+          </div>
+          <div class="mb-3">
+            <label for="stu_id" class="form-label">Student ID</label>
+            <input type="text" class="form-control" id="stu_id" name="student[stu_id]" value="" required>
+          </div>
+          <div class="mb-3">
+            <label for="su_id" class="form-label">DTU</label>
+            <input type="text" class="form-control" id="su_id" name="student[reg_DTU]" value="DTU" required>
+          </div>
+          <div class="mb-3">
+            <label for="req_year" class="form-label">Reg_year</label>
+            <input type="text" class="form-control" id="req_year" name="student[reg_year]" value="2022" required>
+          </div>
+          <div class="mb-3">
+            <label for="reg_id" class="form-label">REG_ID</label>
+            <input type="text" class="form-control" id="reg_id" name="student[reg_id]" value="" required>
+          </div>
+          <div class="mb-3">
+            <label for="f_name" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="f_name" name="student[f_name]" value=" " required>
+          </div>
+          <div class="mb-3">
+            <label for="m_name" class="form-label">Middle Name</label>
+            <input type="text" class="form-control" id="m_name" name="student[m_name]" value=" " required>
+          </div>
+          <div class="mb-3">
+            <label for="l_name" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="l_name" name="student[l_name]" value=" " required>
+          </div>
+          <div class="mb-3">
+            <label for="fname" class="form-label">Father's Name</label>
+            <input type="text" class="form-control" id="fathername" name="student[fathername]" value="" required>
+          </div>
+          <div class="mb-3">
+            <label for="rank" class="form-label">Rank</label>
+            <input type="text" class="form-control" id="rank" name="student[rank]" value="" required>
+          </div>
+          <div class="mb-3">
+            <label for="scheme_year" class="form-label">Scheme Year</label>
+            <input type="text" class="form-control" id="scheme_year" name="student[scheme_year]" value="" required>
+          </div>
+          <div class="mb-3">
+            <label for="scheme_year" class="form-label">Photo link</label>
+            <input type="text" class="form-control" id="photo" name="student[photo]" value="" required>
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Mobile Number</label>
+            <input type="number" class="form-control" id="phone" name="student[phone]" maxlength="10" value="" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email ID</label>
+            <input type="email" class="form-control" id="email" name="student[email]" value="" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label><br>
+            <textarea id="address" name="student[address]" rows="4" cols="50" value="" required></textarea>
+            <!-- <input type="text" class="form-control" id="roll_no" name="student[roll_no]" value="" required> -->
+          </div>
+          <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" id="city" name="student[city]" value="" required>
+
+            <!-- <input type="text" class="form-control" id="roll_no" name="student[roll_no]" value="" required> -->
+          </div>
+
+          <div class="mb-3">
+            <label for="postalCode" class="form-label">Pin Code</label>
+            <input type="number" class="form-control" id="postalCode" name="student[pincode]" value="" required
+              maxlength="6">
+          </div>
+
+
+
+          <div class="mb-3">
+            <label for="sex" class="form-label">Sex</label>
+
+            <select id="sex" name="student[sex]" class="form-control">
+              <option value="Male" name="student[sex]">Male</option>
+              <option value="Female" name="student[sex]">Female</option>
+              <option value="Other" name="student[sex]">Other</option>
+
+
+            </select>
+          </div>
+
+
+
+          <div class="mb-3">
+            <label for="phone2" class="form-label">Mobile Number (Secondary)</label>
+            <input type="number" class="form-control" id="phone2" name="student[phone2]" maxlength="10">
+          </div>
+          <div class="mb-3">
+            <label for="Course" class="form-label">Academic Programme</label>
+
+            <select id="inputState" name="student[aprog]" class="form-control">
+              <option selected>Choose...</option>
+              <%for(let aprog of aprogs){%>
+                <option value="<%=aprog.aprog%>" name="student[aprog]">
+                  <%=aprog.name%>
+                </option>
+                <%}%>
+            </select>
+          </div>
+
+
+          <label for="branch">Specialization(Discipline)</label>
+          <select id="inputState" name="student[sp_code]" class="form-control">
+            <option selected>Choose...</option>
+            <%for(let specialization of specializations){%>
+              <option value="<%=specialization.sp_code%>" name="student[sp_code]">
+                <%=specialization.sp_name%>
+              </option>
+              <%}%>
+          </select>
+
+
+
+          <label for="nation" class="form-label">Nationality</label>
+          <input type="text" class="form-control" id="nationality" name="student[nationality]" value="" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="student[password]" value="" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    </div>
+  
+</body>
+
+</html>

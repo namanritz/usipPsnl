@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="/bootstrap.css">
+  <script src="/bootstrap.js"></script>
+  <style>
+    body {
+      background: antiquewhite;
+    }
+
+    .form-control:focus {
+      box-shadow: none;
+      border-color: #BA68C8
+    }
+
+    .profile-button {
+      background: #0275d8;
+      box-shadow: none;
+      border: none
+    }
+
+    .profile-button:hover {
+      background: #0275d8
+    }
+
+    .profile-button:focus {
+      background: #0275d8;
+      box-shadow: none
+    }
+
+    .profile-button:active {
+      background: #0275d8;
+      box-shadow: none
+    }
+
+    .back:hover {
+      color: #0275d8;
+      cursor: pointer
+    }
+
+    .labels {
+      font-size: 11px
+    }
+
+    .add-experience:hover {
+      background: #0275d8;
+      color: #fff;
+      cursor: pointer;
+      border: solid 1px #0275d8
+    }
+
+    a {
+      color: #000000;
+      text-decoration: none;
+      background-color: transparent;
+      -webkit-text-decoration-skip: objects;
+    }
+
+    a:hover {
+      color: #000000;
+      text-decoration: none;
+      background-color: transparent;
+    }
+  </style>
+</head>
+
+<body>
+
+  <%- include('./partials/flash.ejs')%>
+    <%- include('./partials/navbar')%>
+
+      <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+          <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+              <img class="rounded-circle mt-5 mb-4" width="150px" <%if(student.photo!="NULL"){%> src="<%=student.photo%>"
+                <%}else{%> src="/studentAvatar.png"<%}%>  >
+                    <h5 class="font-weight-bold">
+                      <%=student.f_name%>
+                        <%=student.m_name%>
+                          <%=student.l_name%>
+                    </h5>
+                    <p class="text-black-50 mb-1">
+                      <%=student.aprog%>
+                    </p>
+                    <p class="text-black-50 mb-4">
+                    <%if(specialization){%>  <%=specialization.sp_name%><%}else{%><%=student.sp_code%><%}%>
+                    </p>
+            </div>
+          </div>
+          <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="text-right">My Profile</h4>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-12 d-flex flex-row justify-content-between">
+                  <p class="mb-0">Full Name</p>
+                  <p class="text-muted mb-2">
+                    <%=student.f_name%>
+                      <%=student.m_name%>
+                        <%=student.l_name%>
+                  </p>
+                </div>
+
+                <div class="col-md-12 d-flex flex-row justify-content-between">
+                  <p class="mb-0">Email</p>
+                  <p class="text-muted mb-2">
+                    <%=student.email%>
+                  </p>
+                </div>
+
+                <div class="col-md-12 d-flex flex-row justify-content-between">
+                  <p class="mb-0">Phone</p>
+                  <p class="text-muted mb-2">
+                    <%=student.phone%>
+                  </p>
+                </div>
+
+                <div class="col-md-12 d-flex flex-row justify-content-between">
+                  <p class="mb-0">Aadhar Number</p>
+                  <p class="text-muted mb-2">
+                    <%=student.aadhar%>
+                  </p>
+                </div>
+
+                <div class="col-md-12 d-flex flex-row justify-content-between">
+                  <p class="mb-0">Father Name</p>
+                  <p class="text-muted mb-2">
+                    <%=student.fathername%>
+                  </p>
+                </div>
+
+                <div class="col-md-12 d-flex flex-row justify-content-between">
+                  <p class="mb-0">Address</p>
+                  <p class="text-muted mb-2">
+                    <%=student.address%>
+                  </p>
+                </div>
+
+                <div class="col-md-12 d-flex flex-row justify-content-between">
+                  <p class="mb-0">Postal Code</p>
+                  <p class="text-muted mb-2">
+                    <%=student.pincode%>
+                  </p>
+                </div>
+
+                <div class="col-md-12 d-flex flex-row justify-content-between">
+                  <p class="mb-0">Nationality</p>
+                  <p class="text-muted mb-2">
+                    <%=student.nationality%>
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="mt-5 text-center">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-3 py-5">
+              <div class="d-flex justify-content-between align-items-center experience">
+                <h4>Subjects</h4>
+                <span class="border px-3 p-1 add-experience">
+
+                  <a href="/student/courseRegisteration/<%=student._id%>" class="text-decoration-none">
+                    <i class=""></i>&nbsp;Course Registeration</a></span>
+              </div><br>
+
+              <div class="col-md-12">
+
+                <%for(let subject of currentSubjects){%>
+                  <h6 class="card-title">
+                    <%=subject.sub_code%>
+                  </h6>
+                  <p class="card-text">
+                    <%=subject.sub_name%>
+                  </p>
+                  <%}%>
+
+                  <div id="blink">
+                   <a href="/student/admitCard/<%=student._id%>"> Admit Card </a>
+                  </div>
+                  
+                <script type="text/javascript">
+                    var blink = 
+                        document.getElementById('blink');
+              
+                    setInterval(function () {
+                        blink.style.opacity = 
+                        (blink.style.opacity == 0 ? 1 : 0);
+                    }, 1000); 
+                </script>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+      <script src="assets/js/script.js"></script>
+
+</body>
+
+</html>

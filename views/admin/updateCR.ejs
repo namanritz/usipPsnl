@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap.css">
+    <script src="/bootstrap.js"></script>
+</head>
+<style>
+    .left-side {
+        width: 20%;
+        border: 1px solid gray;
+        padding: 10px;
+        overflow: scroll;
+    }
+
+    .right-side {
+        width: 80%;
+        border: 1px solid gray;
+        padding: 10px;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        /* background-image: url(dtubg.jpeg);
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%; */
+        overflow: scroll;
+        /* background-color: aliceblue; */
+        background-color: aliceblue;
+
+    }
+
+    .img-dtu img {
+        top: 53px;
+        position: absolute;
+        scale: 1;
+    }
+
+    @media (min-width: 950px) {
+        .img-dtu img {
+            /* top: 220px;
+            position: absolute;
+            scale: 3.3  !important; */
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+
+    .container {
+        display: flex;
+        opacity: 0.9;
+        position: relative;
+        z-index: 8;
+        margin: auto;
+        width: 370px;
+        padding: 30px;
+        margin-top: 100px !important;
+        background-color: antiquewhite !important;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+    }
+
+    .container h1 {
+        text-align: center;
+        margin-bottom: 25px !important;
+
+    }
+
+    .container input {
+        border-radius: 4px;
+
+    }
+</style>
+
+
+
+<body>
+    <%- include('./partials/flash')%>
+        <%- include('./partials/navbar')%>
+
+
+            Aprog : <%=cr.aprog%>
+                <br>
+                Semester : <%=cr.sem%>
+
+                    <form action="/admin/cr/<%=cr._id%>" method="post">
+
+                        <div class="mb-3">
+                            <label for="Course" class="form-label">Open</label>
+
+                            <select id="inputState" name="cr[open]" class="form-control">
+                                <option value=true <%if(cr.open){%>selected<%}%> name="cr[open]">TRUE</option>
+                                <option value=false <%if(!cr.open){%>selected<%}%> name="cr[open]">FALSE</option>
+                            </select>
+
+
+                            <div class="mb-3">
+                                <label for="odd/even" class="form-label">ODD/EVEN</label>
+                                <select id="odd/even" name="cr[odd_even]" class="form-control">
+                                    <option value="ODD" <%if(cr.odd_even=="ODD" ){%>selected<%}%>
+                                            name="cr[odd_even]">ODD</option>
+                                    <option value="EVEN" <%if(cr.odd_even=="EVEN" ){%>selected<%}%>
+                                            name="cr[odd_even]">EVEN</option>
+                                </select>
+                            </div>
+
+
+                            <label for="Duration" class="form-label">Duration ( Year-Year(Month-Month) )</label>
+                            <input type="text" class="form-control" id="Duration" name="cr[duration]"
+                                value="<%=cr.duration%>" required>
+
+
+
+                            <label for="nation" class="form-label">Max Credits</label>
+                            <input type="text" class="form-control" id="nationality" name="cr[maxCredits]"
+                                value="<%=cr.maxCredits%>" required>
+
+
+                            <label for="nation" class="form-label">Max Electives</label>
+                            <input type="text" class="form-control" id="nationality" name="cr[maxElectives]"
+                                value="<%=cr.maxElectives%>" required>
+
+
+
+
+
+
+
+
+                            <button type="submit">SUBMIT</button>
+                    </form>
+
+
+
+</body>
+
+</html>
+<hr>
+<hr>
+SLOTS
+
+
+<div class="container">
+    <div class="left-side">
+        <% for (let i=0; i < cr.slots.length; i++) { %>
+            <div class="name" onClick='showDescription(<%=i%>)'>
+                <%= cr.slots[i].name %>
+            </div>
+            <% } %>
+    </div>
+
+    <div class="right-side">
+        <% for (let i=0; i < cr.slots.length; i++) { %>
+            <div class="description" id="description<%= i %>" style="display: none;">
+
+                <form action="/admin/updateSlot/<%=cr.slots[i]._id%>" method="post">
+                    <div class="form-group">
+                        <label for="name<%= i %>">Name</label>
+                        <input type="text" class="form-control" id="name<%= i %>" name="name"
+                            value="<%= cr.slots[i].name %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name<%= i %>">Max Select</label>
+                        <input type="text" class="form-control" id="name<%= i %>" name="max"
+                            value="<%= cr.slots[i].max %>" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <form action="/admin/deleteSlot/<%=cr.slots[i]._id%>" method="get">
+                <button type="submit">DELETE</button></form>
+            </div>
+            <% } %>
+    </div>
+</div>
+
+<div class="form-group">
+    <button type="button" onclick="showNewObjectForm()">New Slot</button>
+</div>
+
+<div id="new-object-form" style="display: none;">
+    <form action="/admin/newSlot/<%=cr._id%>" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="max">Max Select</label>
+            <input type="text" class="form-control" id="max" name="max" value="1" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div style="overflow-y: scroll; max-height: 600px;">
+    <table table style="width: 150%; position: sticky; top: 0;" class="table">
+        <thead>
+            <th>Batch Year</th>
+            <th>Subject ID</th>
+            <th>Subject Code</th>
+            <th>Subject Name</th>
+            <th>Minor</th>
+            <th>Subject_imax_m</th>
+            <th>Subject_emax_m</th>
+            <th>subject_credit</th>
+            <th>TH/PR</th>
+            <th>Semester</th>
+            <th>SP_Code</th>
+            <th>APROG</th>
+            <th>Scheme Year</th>
+            <th>Subject Number</th>
+            <th>Assessment Plan</th>
+            <th>Course type</th>
+            <th>tutorials</th>
+            <th>lectures</th>
+            <th>practicals</th>
+            <th>course coordinator</th>
+            <th>slot</th>
+
+        </thead>
+
+        <%let i=0 ;for(let scheme of sub){i++;if(i>100){break;}%>
+            <tr>
+                <form action="/admin/updateCourse/<%=scheme._id%>" method="post">
+            <tr>
+                <td><input type="text" name="batch_year" value="<%=scheme.batch_year%>"></td>
+                <td><input type="text" name="sub_id" value="<%=scheme.sub_id%>"></td>
+                <td><input type="text" name="sub_code" value="<%=scheme.sub_code%>"></td>
+                <td><input type="text" name="sub_name" value="<%=scheme.sub_name%>"></td>
+                <td><input type="text" name="minor" value="<%=scheme.minor%>"></td>
+                <td><input type="text" name="sub_imax_m" value="<%=scheme.sub_imax_m%>"></td>
+                <td><input type="text" name="sub_emax_m" value="<%=scheme.sub_emax_m%>"></td>
+                <td><input type="text" name="sub_credit" value="<%=scheme.sub_credit%>"></td>
+                <td><input type="text" name="th_pr" value="<%=scheme.th_pr%>"></td>
+                <td><input type="text" name="num" value="<%=scheme.num%>"></td>
+                <td><input type="text" name="sp_code" value="<%=scheme.sp_code%>"></td>
+                <td><input type="text" name="aprog" value="<%=scheme.aprog%>"></td>
+                <td><input type="text" name="scheme_year" value="<%=scheme.scheme_year%>"></td>
+                <td><input type="text" name="sub_no" value="<%=scheme.sub_no%>"></td>
+                <td><input type="text" name="asses_plan" value="<%=scheme.asses_plan%>"></td>
+                <td><input type="text" name="course_type" value="<%=scheme.course_type%>"></td>
+                <td><input type="text" name="tutorials" value="<%=scheme.tutorials%>"></td>
+                <td><input type="text" name="lectures" value="<%=scheme.lectures%>"></td>
+                <td><input type="text" name="practicals" value="<%=scheme.practicals%>"></td>
+                <td><input type="text" name="course_coordinator_name" value="<%=scheme.course_coordinator_name%>"></td>
+                <td><input type="text" name="slot" value="<%=scheme.slot%>"></td>
+                <td><input type="submit" value="Submit"></td>
+
+            </tr>
+            </form>
+            </tr>
+            <%}%>
+
+    </table>
+
+</div>
+
+</body>
+
+</html>
+
+<script>
+    function showNewObjectForm() {
+        document.getElementById("new-object-form").style.display = "block";
+    }
+
+    function showDescription(index) {
+        // hide all descriptions
+        for (let i = 0; i < <%= cr.slots.length %>; i++) {
+            document.getElementById("description" + i).style.display = "none";
+        }
+
+        // show selected description
+        document.getElementById("description" + index).style.display = "block";
+    }
+</script>

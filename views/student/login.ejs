@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+</head>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        /* background-image: url(dtubg.jpeg);
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%; */
+        overflow: hidden;
+        /* background-color: aliceblue; */
+        background-color: aliceblue;
+
+    }
+
+    .img-dtu img {
+        top: 53px;
+        position: absolute;
+        scale: 1;
+    }
+
+    @media (min-width: 950px) {
+        .img-dtu img {
+            /* top: 220px;
+            position: absolute;
+            scale: 3.3  !important; */
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+
+    .container {
+        opacity: 0.9;
+        position: relative;
+        z-index: 8;
+        margin: auto;
+        width: 380px !important; 
+        padding: 30px;
+        margin-top: 100px !important;
+        background-color: antiquewhite !important;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+    }
+
+    .container h1 {
+        text-align: center;
+        margin-bottom: 25px !important;
+
+    }
+
+    .container input {
+        border-radius: 4px;
+
+    }
+</style>
+
+
+
+<body>
+  <%- include('./partials/flash')%>
+
+    <div class="img-dtu">
+        <img src="/dtubg.jpeg" alt="">
+    </div>
+
+
+    <div class="container">
+        <h1>
+            Student Portal
+        </h1>
+
+        <form action="/student/login" method="post">
+            <div class="mb-3">
+                <label for="roll_no" class="form-label">Roll Number</label>
+                <input type="text" name="roll_no" class="form-control">
+            </div>
+
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+
+            <div class="mb-3" style="margin:auto; display: flex; align-items: center; justify-content: center; ">
+                <button type="submit" class="btn btn-primary" style="margin:auto;  margin-bottom: 10px;">Login</button>
+            </div>
+        </form>
+
+            <div class="mb-3" style="margin:auto; display: flex; align-items: center; justify-content: center; ">
+               <a href="/auth"> <button class="btn btn-primary" style="margin:auto;  margin-bottom: 10px;">GOOGLE LOGIN</button></a>
+            </div>
+
+
+            <a href="/"> Not a student ? </a>
+           <br>
+
+            <!-- Do not have an account ?
+            <a href="/student/register">Register Here</a> -->
+       
+    </div>
+   
+</body>
+
+</html>

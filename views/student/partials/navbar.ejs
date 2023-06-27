@@ -1,0 +1,22 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Delhi Technological University</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/student/home/<%=student._id%>">Home</a>
+                <!-- <a class="nav-link" href="/student/edit/<%=student._id%>">Edit Info</a> -->
+                <a class="nav-link" href="/student/courseRegisteration/<%=student._id%>">Course Registeration</a>
+            </div>
+            
+        </div>
+        <div class="navbar-nav ml-auto float-right">
+            <div class="nav-link">Hello <%=student.f_name%></div>
+            <a class="nav-link" href="/student/login">Logout</a>
+        </div>
+    </div>
+    
+</nav>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/bootstrap.css">
+  <script src="/bootstrap.js"></script>
+  <style>
+    .title-block {
+      position: relative;
+    }
+    thead {
+        position: sticky;
+        top : 50px;
+        background-color: aqua;
+       
+
+    }
+
+    .title-block {
+      max-width: 100%;
+      margin: auto;
+      border-radius: 5px;
+    }
+
+    .sem-info {
+      max-width: 1000px;
+      margin: auto;
+      padding-top: 30px;
+      border-radius: 30%;
+    }
+
+    .core-subjects {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .elective-subjects {
+      max-width: 1100px;
+      margin: auto;
+    }
+  </style>
+  <title>Course Registration</title>
+</head>
+
+<body>
+  <%- include('./partials/flash')%>
+    <%- include('./partials/navbar')%>
+
+      <div class="title-block" style="position: relative;">
+
+       
+  
+      <div class=" title-block">
+
+        </div>
+        <nav class="navbar navbar-expand-lg bg-light">
+          <div class="container-fluid d-flex justify-content-center">
+            <a class="navbar-brand " href="#">Course Registration</a>
+          </div>
+        </nav>
+        <div class="container-fluid d-flex justify-content-center">
+          <a class="navbar-brand" " 
+          href='/student/acknowledgement/<%=student._id%>' target="_blank">Course Registration Slip</a>
+      </div>
+      </div>
+      <div class="sem-info">
+        <table class="table table-hover table-borderless">
+          <thead>
+            <tr>
+              <th scope="col">Current Degree</th>
+              <th scope="col">Branch</th>
+              <th scope="col">Semester</th>
+              <th scope="col">Academic Year</th>
+              <th scope="col">Credits Registered</th>
+              <th scope="col">Max Credits</th>
+              <th scope="col">Max Electives</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row">
+                <%=student.aprog%>
+              </td>
+              <td>
+                <%=student.sp_code%>
+              </td>
+              <td>
+                <%=student.currentSem%>
+              </td>
+              <td>2022-23</td>
+              <td>
+                <%=student.currentCredits%>
+              </td>
+              <td>
+                <%=rules.maxCredits%>
+              </td>
+              <td>
+                <%=rules.maxElectives%>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br><br>
+      <%if(compulsorySubjects.length){%>
+      <div class="core-subjects">
+        <h4 class="d-flex justify-content-center">Compulsory Courses</h4>
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Course Name</th>
+              <th scope="col">Course Code</th>
+              <th scope="col">Credits</th>
+              <th scope="col">Register/Drop</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+
+            <%let i=0; for(let subject of compulsorySubjects){%>
+              <tr <%if(student.currentSubjects.includes(subject._id)){%> bgcolor="#0ff288" <%}%> 
+              >
+                <td>
+                  <%=subject.sub_name%>
+                </td>
+                <td>
+                  <%=subject.sub_code%>
+                </td>
+                <td>
+                  <%=subject.sub_credit%>
+                </td>
+                <td>
+                  <form action="/student/courseRegister/<%=student._id%>/<%=subject._id%>" method="post">
+                    <button class="btn btn-primary" type="submit" <%if(student.currentSubjects.includes(subject._id) ||
+                      student.currentCredits>=rules.maxCredits ){%>disabled<%}%>>
+                        Register
+                    </button>
+                    <button class="btn btn-warning
+                    " type="submit" <%if(!student.currentSubjects.includes(subject._id)){%>disabled<%}%>>Drop</button>
+                  </form>
+                </td>
+              </tr>
+
+              <%i++;}%>
+
+          </tbody>
+        </table>
+        <br><br>
+      </div>
+
+
+<%}%>
+  
+        
+      <div class="elective-subjects">
+        <h4 class="d-flex justify-content-center">Elective Courses</h4>
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Course Name</th>
+              <th scope="col">Course Code</th>
+              <th scope="col">Credits</th>
+              <th scope="col">Slot</th>
+              <th scope="col">Seats</th>
+              <th scope="col">Register/Drop</th>
+            </tr>
+          </thead>
+
+          <tbody class="table-group-divider">
+                
+     <% i=0; for(let e of electives){%>
+
+      <tr class="electiveName">
+        <td style="background-color: black; color: white; min-width: 600px">SLOT - <%=rules.slots[i].name%> (Max - <%=rules.slots[i].max%>)  <img style="float: right;" src="/dropDown.png" height="10px" alt="" srcset=""></td>
+       
+      </tr>
+      <%j=0; for(let elective of e){      %>
+
+
+
+        <tr <%if(student.currentSubjects.includes(elective._id)){%> bgcolor="#0ff288" <%}%>
+          <%if(student.currentCredits>=rules.maxCredits ||
+            student.currentElectives>=rules.maxElectives ||blockedSlots.includes(elective.slot)){%> bgcolor="#d4d3d2" <%}%>
+              >
+              <td>
+                <%=elective.sub_name%> <br>
+              </td>
+              <td>
+                <%=elective.sub_code%>
+              </td>
+              <td>
+                <%=elective.sub_credit%>
+              </td>
+              <td>
+                <%=elective.slot%>
+              </td>
+              <td>
+                <%=elective.seats%>
+              </td>
+              <td>
+                <form action="/student/courseRegister/<%=student._id%>/<%=elective._id%>" method="post">
+                  <button class="btn btn-primary
+
+          " type="submit" <%if(student.currentSubjects.includes(elective._id) ||
+                    student.currentCredits>=rules.maxCredits ||
+                    student.currentElectives>=rules.maxElectives || blockedSlots.includes(elective.slot) ){%>disabled<%}%>>
+                      Register
+                  </button>
+                  <button class="btn btn-warning
+          " type="submit" <%if(!student.currentSubjects.includes(elective._id)){%>disabled<%}%>>Drop</button>
+                </form>
+              </td>
+      </tr>
+
+
+
+        <% j++;}i++;}%>
+          </tbody>
+
+</table></div>
+
+    
+        <script src="/toogle.js"></script>
+<script>
+  $(document).ready(function() {
+    $(".electiveName").click(function() {
+      $(this).nextUntil(".electiveName").toggle();
+    });
+  });
+</script>
+
+</body>
+
+</html>

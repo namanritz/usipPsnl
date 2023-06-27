@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap.css">
+    <script src="/bootstrap.js"></script>
+
+    
+</head>
+<style>
+
+
+    table {
+        /* position: relative; */
+    }
+    thead {
+        position: sticky;
+        top: 0;
+        background-color: black;
+        color: white;
+    }
+    html {
+        overflow: scroll !important;
+    }
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        /* background-image: url(dtubg.jpeg);
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%; */
+        /* background-color: aliceblue; */
+        background-color: aliceblue;
+    }
+    .img-dtu img {
+        top: 53px;
+        position: absolute;
+        scale: 1;
+    }
+    @media (min-width: 950px) {
+        .img-dtu img {
+            /* top: 220px;
+            position: absolute;
+            scale: 3.3  !important; */
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .container {
+        opacity: 0.9;
+        position: relative;
+        z-index: 8;
+        margin: auto;
+        width: 370px;
+        padding: 30px;
+        margin-top: 100px !important;
+        background-color: antiquewhite !important;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+    }
+    .container h1 {
+        text-align: center;
+        margin-bottom: 25px !important;
+    }
+    .container input {
+        border-radius: 4px;
+    }
+</style>
+
+
+
+<body>
+    <%- include('./partials/flash')%>
+        <%- include('./partials/navbar')%>
+<div></div>
+        <input type="text" id="searchTerm">
+        <button id="searchButton">Search</button>
+    </div>
+            <div  style="overflow-y: scroll; max-height: 600px;">
+                <table table style="width: 150%; position: sticky; top: 0;" class="table">
+                    <thead>
+                        <th>Batch Year</th>
+                        <th>Subject ID</th>
+                        <th>Subject Code</th>
+                        <th>Subject Name</th>
+                        <th>Minor</th>
+                        <th>Subject_imax_m</th>
+                        <th>Subject_emax_m</th>
+                        <th>subject_credit</th>
+                        <th>TH/PR</th>
+                        <th>Semester</th>
+                        <th>SP_Code</th>
+                        <th>APROG</th>
+                        <th>Scheme Year</th>
+                        <th>Subject Number</th>
+                        <th>Assessment Plan</th>
+                        <th>Course type</th>
+                        <th>Course Group</th>
+                        <th>Slot</th>
+                        <th>tutorials</th>
+                        <th>lectures</th>
+                        <th>practicals</th>
+                        <th>course coordinator</th>
+
+                    </thead>
+
+                    <tbody id="tableBody">
+                    <% let i=0; for(let scheme of subjectSchemas){%>
+                        <tr>
+                            <form action="/admin/updateCourse/<%=scheme.id%>" method="post">
+                            <%if(i>100){ break;}%>
+                            <td><input type="text" name="batch_year" value="<%=scheme.batch_year%>"></td>
+                            <td><input type="text" name="sub_id" value="<%=scheme.sub_id%>"></td>
+                            <td><input type="text" name="sub_code" value="<%=scheme.sub_code%>"></td>
+                            <td><input type="text" name="sub_name" value="<%=scheme.sub_name%>"></td>
+                            <td><input type="text" name="minor" value="<%=scheme.minor%>"></td>
+                            <td><input type="text" name="sub_imax_m" value="<%=scheme.sub_imax_m%>"></td>
+                            <td><input type="text" name="sub_emax_m" value="<%=scheme.sub_emax_m%>"></td>
+                            <td><input type="text" name="sub_credit" value="<%=scheme.sub_credit%>"></td>
+                            <td><input type="text" name="th_pr" value="<%=scheme.th_pr%>"></td>
+                            <td><input type="text" name="num" value="<%=scheme.num%>"></td>
+                            <td><input type="text" name="sp_code" value="<%=scheme.sp_code%>"></td>
+                            <td><input type="text" name="aprog" value="<%=scheme.aprog%>"></td>
+                            <td><input type="text" name="scheme_year" value="<%=scheme.scheme_year%>"></td>
+                            <td><input type="text" name="sub_no" value="<%=scheme.sub_no%>"></td>
+                            <td><input type="text" name="asses_plan" value="<%=scheme.asses_plan%>"></td>
+                            <td><input type="text" name="course_type" value="<%=scheme.course_type%>"></td>
+                            <td><input type="text" name="course_group" value="<%=scheme.course_group%>"></td>
+                            <td><input type="text" name="slot" value="<%=scheme.slot%>"></td>
+                            <td><input type="text" name="tutorials" value="<%=scheme.tutorials%>"></td>
+                            <td><input type="text" name="lectures" value="<%=scheme.lectures%>"></td>
+                            <td><input type="text" name="practicals" value="<%=scheme.practicals%>"></td>
+                            <td><input type="text" name="course_coordinator_name"
+                                    value="<%=scheme.course_coordinator_name%>"></td>
+                            <td><input type="submit" value="Submit"></td>
+                        </form>
+                        </tr>
+                        <%i++;}%>
+                    </tbody>
+                </table>
+            </div>
+
+
+       
+
+
+
+            <script>
+                const searchTermInput = document.getElementById("searchTerm");
+                const searchButton = document.getElementById("searchButton");
+                //console.log(searchTermInput);
+                const tableBody = document.getElementById('tableBody');
+                const subjectSchemas = <%- JSON.stringify(subjectSchemas)%>
+               
+                searchButton.addEventListener('click', function() {
+                    //console.log(subjectSchemas);
+                  const searchTerm = searchTermInput.value.toLowerCase();
+                  let filteredData = subjectSchemas.filter(function(scheme) {
+                    return scheme.sub_code.toLowerCase().includes(searchTerm);
+                    
+                  });
+                 // var obj = JSON.parse(filteredData);
+                  //console.log(obj);
+                  if(filteredData.length <=100){
+                  tableBody.innerHTML = '';
+                  filteredData.forEach(function(scheme) {
+                    tableBody.innerHTML += `
+                      <tr>
+                        <form action="/admin/updateCourse/${scheme._id}" method="post">
+                            <td><input type="text" name="batch_year"  value="${scheme.batch_year}"}></td>
+                                    <td><input type="text" name="sub_id" value="${scheme.sub_id}"></td>
+                                    <td><input type="text" name="sub_id" value="${scheme.sub_code}"></td>
+                                    <td><input type="text" name="sub_code" value="${scheme.sub_name}"></td>
+                                    <td><input type="text" name="batch_year" value="${scheme.minor}"></td>
+                                    <td><input type="text" name="sub_id" value="${scheme.sub_imax_m}"></td>
+                                    <td><input type="text" name="sub_code" value="${scheme.sub_emax_m}"></td>
+                                    <td><input type="text" name="batch_year" value="${scheme.sub_credit}"></td>
+                                    <td><input type="text" name="sub_id" value="${scheme.th_pr}"></td>
+                                    <td><input type="text" name="sub_code" value="${scheme.num}"></td>
+                                    <td><input type="text" name="batch_year" value="${scheme.sp_code}"></td>
+                                    <td><input type="text" name="sub_id" value="${scheme.aprog}"></td>
+                                    <td><input type="text" name="sub_code" value="${scheme.scheme_year}"></td>
+                                    <td><input type="text" name="batch_year" value="${scheme.sub_no}"></td>
+                                    <td><input type="text" name="sub_id" value="${scheme.assess_plan}"></td>
+                                    <td><input type="text" name="sub_code" value="${scheme.course_type}"></td>
+                                    <td><input type="text" name="batch_year" value="${scheme.course_group}"></td>
+                                    <td><input type="text" name="sub_id" value="${scheme.slot}"></td>
+                                    <td><input type="text" name="sub_code" value="${scheme.tutorials}"></td>
+                                    <td><input type="text" name="batch_year" value="${scheme.lectures}"></td>
+                                    <td><input type="text" name="sub_id" value="${scheme.practicals}"></td>
+                                    <td><input type="text" name="sub_code" value="${scheme.course_coordinator_name}"></td>
+                                    <td><button type="submit">SUBMIT</button><td>
+                        </form>
+                      </tr>
+                    `;
+                  });
+                }
+                });
+            
+              </script>
+              
+</body>
+
+</html>

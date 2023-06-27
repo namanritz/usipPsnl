@@ -1,0 +1,303 @@
+<% function integer_to_roman(num) { if (typeof num !=='number' ) return false; if(num==0) return "Course Work" ; var
+	digits=String(+num).split(""), key=["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM", ""
+	,"X","XX","XXX","XL","L","LX","LXX","LXXX","XC", "" ,"I","II","III","IV","V","VI","VII","VIII","IX"], roman_num="" ,
+	i=3; while (i--) roman_num=(key[+digits.pop() + (i * 10)] || "" ) + roman_num; return Array(+digits.join("") +
+	1).join("M") + roman_num; } %>
+	<!DOCTYPE html>
+	<html>
+
+	<head>
+		<script src="/html2pdf.js"></script>
+	
+
+		<title>Course Registration Acknowledgement Slip</title>
+		<style>
+			.symbol {
+				margin-right: 10px;
+			}
+
+			h1 {
+				padding-left: 100px;
+			}
+
+			#page {
+				font-family: Arial, sans-serif;
+				padding: 10px;
+			}
+
+			/* Add some general styling */
+			body {
+				font-family: Arial, sans-serif;
+				padding: 10px;
+			}
+
+			/* Center the header and give it some styling */
+			h1,
+			h2 {
+				text-align: center;
+				margin-bottom: 10px;
+			}
+
+			/* Add some spacing between the student details and the table */
+			div+br {
+				margin-top: 30px;
+			}
+
+			/* Style the table */
+			table {
+				border-collapse: collapse;
+				width: 100%;
+			}
+
+			th,
+			td {
+				border: 1px solid #ddd;
+				padding: 8px;
+				text-align: left;
+			}
+
+			th {
+				background-color: #f2f2f2;
+			}
+
+			/* Add some spacing between the table and the signature */
+			
+
+			/* Center the signature and give it some styling */
+			div.signature {
+				text-align: center;
+				margin-top: 10px;
+			}
+
+			p {
+				margin-bottom: 10px;
+			}
+
+			.abc {
+				display: flex;
+			}
+
+			.left {
+				width: 50%;
+				padding-right: 20px;
+			}
+
+			.right {
+				width: 50%;
+				padding-left: 20px;
+			}
+
+			td {
+				font-size: x-small;
+				font-weight: normal;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div id="page" style="max-width: 700px; margin:0px auto; border:0.1px solid;">
+			<div>
+				<div style="max-height: 90px;">
+					<div style="text-align:center;">
+						<p style="text-align:center;font-size: larger; margin:5px 0;"> <b> Delhi Technological
+								University
+						</p></b>
+						<p style="text-align:center;margin:5px 0; font-size: small;">Formerly Delhi College of
+							Engineering
+						</p>
+						<p style="text-align:center;font-size: smaller;margin:5px 0;">Course Registration Form</p>
+						<p style="text-align:center;font-size: smaller;margin:5px 0;">
+							<%=aprog.name%>
+								(<%=sp.sp_name%>)
+						</p>
+					</div>
+					<div style="width: 75px;  position: relative; bottom:75px; right:0%;" class="logo">
+						<img src="/img.png" alt="" style="max-width: 100%; ">
+					</div>
+				</div>
+				<b>
+					<hr>
+				</b>
+
+				<div class="abc" style="font-size: small; ">
+					<div class="left">
+						<p><strong>Student Name:</strong>
+							<%=student.f_name%>
+								<%=student.m_name%>
+									<%=student.l_name%>
+						</p>
+						<p><strong>Date of Birth:</strong>
+							<%if(student.dob && student.dob!="NULL" ){%>
+								<%=student.dob%>
+									<%}%>
+						</p>
+						<p><strong>Enrollment Number:</strong>
+							<%=student.roll_no.toUpperCase()%>
+						</p>
+						<p><strong>Email:</strong>
+							<%=student.email%>
+
+								<p><strong>Address:</strong>
+									<%=student.address%>
+										<%=student.pincode%>
+								</p>
+
+					</div>
+					<div class="right">
+						<p><strong>Semester:</strong>
+							<%=integer_to_roman(studentState.currentSem)%> Semester
+						</p>
+
+						<p><strong>Branch:</strong>
+							<%=sp.sp_name%>
+						</p>
+						<p><strong>Mobile:</strong>
+							<%=student.phone%>
+						</p>
+						<p><strong>Father's Name:</strong>
+							<%=student.fathername%>
+						</p>
+					</div>
+				</div>
+				<div style="font-size: small;">
+					Register the following subjects in the suggested scheme of <%=aprog.name%>
+						<%=sp.sp_name%> during the <%=rules.odd_even%> semester of <%=rules.duration%>.
+				</div>
+		
+				<table style="font-size: small;">
+					<tr>
+						<th>S.No</th>
+						<th>Subject Code</th>
+						<th>Subject Name</th>
+						<th>Type</th>
+						<th>Credits</th>
+					</tr>
+					<%let i=0; for(let sub of studentState.currentSubjects){%>
+
+						<%if(sub.course_type=='compulsory'||sub.course_type=='COMPULSORY'){i++;%>
+							<tr>
+								<td>
+									<%=i%>
+								</td>
+								<td>
+									<%=sub.sub_code%>
+								</td>
+								<td>
+									<%=sub.sub_name%>
+								</td>
+								<td>
+									<%=sub.course_type%>
+								</td>
+								<td>
+									<%=sub.sub_credit%>
+								</td>
+							</tr>
+							<%}%>
+								<%}%>
+									<%for(let sub of studentState.currentSubjects){%>
+
+										<%if(sub.course_type=='elective'||sub.course_type=='ELECTIVE'){i++%>
+											<tr>
+												<td>
+													<%=i%>
+												</td>
+												<td>
+													<%=sub.sub_code%>
+												</td>
+												<td>
+													<%=sub.sub_name%>
+												</td>
+												<td>
+													<%=sub.course_type%>
+												</td>
+												<td>
+													<%=sub.sub_credit%>
+												</td>
+											</tr>
+											<%}%>
+												<%}%>
+
+				</table>
+				<br>
+				<div style="font-size: small;">
+					Declaration : I here by declare that all the information I have provided during the course
+					registration
+					is
+					true and best of my knowledge. I have passed/will pass all the courses(subjects) in the first and
+					second
+					year. Failing which, I agree to cancel this registration. I agree that this course registration is
+					provisional.
+				</div>
+				<div
+					style="font-size: small; margin-top: 30px; display:flex; flex-direction: row; justify-content: space-between;">
+					<div>
+						<div>
+							Signature of Student.........................
+						</div>
+						<div>
+							<% var currentDate=new Date(); var options={ month: "long" , day: "numeric" ,
+								year: "numeric" , hour: "numeric" , minute: "numeric" , hour12: true }; var
+								timestamp=currentDate.toLocaleString("en-US", options); %>
+								<%=timestamp%>
+
+						</div>
+
+					</div>
+					<div>
+						Signature of Head of Dept.
+					</div>
+				</div>
+				<div></div>
+				<p style="font-size: small; text-align: center;"><strong>CERTIFICATE</strong></p>
+				<div style="font-size: small;">
+					That <%=student.f_name%> (<%=student.roll_no%>) has satisfied the requirement of attendence for
+							attendance for admission to the <%=rules.odd_even%> semester of <%=rules.duration%>
+									Examination of <%=aprog.name%> course.
+										That <%=student.f_name%> (<%=student.roll_no%>) has a good moral character as
+												per this office record.
+				</div>
+				<div style="font-size: small; display:flex; flex-direction: row; justify-content: space-between;">
+					<div>
+						<div>
+							Dated
+						</div>
+						<div>
+							<% var currentDate=new Date(); var options={ month: "long" , day: "numeric" ,
+								year: "numeric" , hour: "numeric" , minute: "numeric" , hour12: true }; var
+								timestamp=currentDate.toLocaleString("en-US", options); %>
+								<%=timestamp%>
+
+						</div>
+
+					</div>
+					<div>
+						Signature of Dean(Acad.)
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<button id="download">DOWNLOAD</button>
+		<script>
+			window.onload = function () {
+				document.getElementById("download").addEventListener("click", () => {
+					const page = this.document.getElementById("page");
+					var opt = {
+						margin: [-10, 0, 0, 0],
+						filename: `<%=student.roll_no%> `,
+						image: { type: 'webp', quality: 1 },
+						jsPDF: { unit: 'mm', orientation: 'portrait' }
+					};
+
+					html2pdf().from(page).save();
+				})
+			}
+
+
+		
+		</script>
+	</body>
+
+
+	</html>
